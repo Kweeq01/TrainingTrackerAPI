@@ -14,7 +14,7 @@ class ExerciseModel(Base):
 
     exercise_id: Mapped[int] = mapped_column(primary_key=True)
     exercise_name: Mapped[str] = mapped_column(VARCHAR(50))
-    description: Mapped[str] = mapped_column(VARCHAR(100))
+    description: Mapped[str | None] = mapped_column(VARCHAR(100), nullable=True)
 
     training_sets: Mapped[list["SetModel"]] = relationship(back_populates="exercise")
 
@@ -23,7 +23,7 @@ class PlanModel(Base):
 
     plan_id: Mapped[int] = mapped_column(primary_key=True)
     plan_name: Mapped[str] = mapped_column(VARCHAR(50))
-    description: Mapped[str] = mapped_column(VARCHAR(100))
+    description: Mapped[str | None] = mapped_column(VARCHAR(100), nullable=True)
 
     days: Mapped[list["DayModel"]] = relationship(back_populates="plan")
 
