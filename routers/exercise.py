@@ -1,14 +1,14 @@
-# Эндпоинты (HTTP-слой)
+# Эндпоинты exercises (HTTP-слой)
 # Принимают запрос, валидируют через schemas/, вызывают repository/, возвращают ответ.
 
 from fastapi import APIRouter, HTTPException
 from database import SessionDep
 from schemas import workout
-from repository.workout import create_exercise, get_exercise_by_id, get_all_exercises, delete_exercise
+from repository.exercise import create_exercise, get_exercise_by_id, get_all_exercises, delete_exercise
 
 router = APIRouter(
-    prefix="/workouts",
-    tags=["Workouts"]
+    prefix="/exercises",
+    tags=["Exercises"]
 )
 
 @router.post("", response_model=workout.SExercise)

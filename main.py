@@ -1,7 +1,12 @@
 # Точка входа - все создания и подключения 
 
 from fastapi import FastAPI
-from routers.workout import router as workout_router
+from routers.exercise import router as exercise_router
+from routers.plan import router as plan_router
 
 app = FastAPI()
-app.include_router(workout_router)
+
+all_routers = [exercise_router, plan_router]
+
+for router in all_routers:
+    app.include_router(router)
