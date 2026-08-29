@@ -4,7 +4,7 @@
 from fastapi import APIRouter, HTTPException
 from database import SessionDep
 from schemas import workout
-from repository.plan import create_plan, get_plan_by_id, delete_plan
+from repository.plan import create_plan, get_plan_by_id, delete_plan, get_all_plans
 
 router = APIRouter(
     prefix="/plans",
@@ -22,7 +22,11 @@ async def get_plan(db: SessionDep, plan_id: int):
     if plan is None:
         raise HTTPException(status_code=404 , detail="Plan not found")
     return plan
-    
+
+@router.get("", response_model=list[workout.SPlan])
+async def get_plans(db: SessionDep):
+    return await get_all_plans(db)
+
 @router.delete("/{plan_id}")
 async def remove_plan(db: SessionDep, plan_id: int):
     deleted = await delete_plan(db, plan_id)
