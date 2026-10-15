@@ -51,7 +51,7 @@ class SetModel(Base):
 
     exercise: Mapped["ExerciseModel"] = relationship(back_populates="training_sets")
     day: Mapped["DayModel"] = relationship(back_populates="training_sets")
-    completed_sets: Mapped[list["CompletedSet"]] = relationship(back_populates="training_set")
+    completed_sets: Mapped[list["CompletedSetModel"]] = relationship(back_populates="training_set")
 
 class SessionModel(Base):
     __tablename__ = "session"
@@ -62,10 +62,10 @@ class SessionModel(Base):
     notes: Mapped[str | None] = mapped_column(VARCHAR(150), nullable=True)
 
     day: Mapped["DayModel"] = relationship(back_populates="sessions")
-    completed_sets: Mapped[list["CompletedSet"]] = relationship(back_populates="session")
+    completed_sets: Mapped[list["CompletedSetModel"]] = relationship(back_populates="session")
 
-class CompletedSet(Base):
-    __tablename__ = "completed_set"
+class CompletedSetModel(Base):
+    __tablename__ = "completed_set" 
 
     completed_set_id: Mapped[int] = mapped_column(primary_key=True)
     session_id: Mapped[int] = mapped_column(ForeignKey("session.session_id"))

@@ -26,6 +26,7 @@ class SPlan(SPlanAdd):
 
 
 class SDayAdd(BaseModel):
+    plan_id: int
     name_training_day: str
     calendar_day: CalendarDay
 
