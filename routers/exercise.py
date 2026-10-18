@@ -17,7 +17,7 @@ async def add_exercise(exercise: workout.SExerciseAdd, db: SessionDep):
 
 @router.get("/{exercise_id}", response_model=workout.SExercise)
 async def get_exercise(db: SessionDep, exercise_id: int):
-    exercise =  await get_exercise_by_id(db, exercise_id)
+    exercise = await get_exercise_by_id(db, exercise_id)
 
     if exercise is None:
         raise HTTPException(status_code=404, detail="Exercise not found")

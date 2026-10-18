@@ -14,7 +14,7 @@ async def get_plan_by_id(db: AsyncSession, plan_id: int) -> workouts.PlanModel |
     plan = await db.get(workouts.PlanModel, plan_id)
     return plan
 
-async def get_all_plans(db: AsyncSession) -> workouts.PlanModel:
+async def get_all_plans(db: AsyncSession) -> list[workouts.PlanModel]:
     query = select(workouts.PlanModel)
     plans = (await db.scalars(query)).all()
     return plans

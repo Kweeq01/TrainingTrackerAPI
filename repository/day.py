@@ -2,13 +2,12 @@ from models import workouts
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from enums import CalendarDay
-from fastapi import HTTPException
 
-async def create_day(db: AsyncSession, plan_id: int, name_training_day: str, calendar_day: CalendarDay) -> workouts.DayModel:
+async def create_day(db: AsyncSession, plan_id: int, name_training_day: str, calendar_day: CalendarDay) -> workouts.DayModel | None:
     plan = await db.get(workouts.PlanModel, plan_id)
 
     if plan is None:
-        raise HTTPException(status_code=404, detail="Plan not found")
+        return None
 
     new_day = workouts.DayModel(plan_id=plan_id, name_training_day=name_training_day, calendar_day=calendar_day)
 
@@ -21,7 +20,7 @@ async def get_day_by_id(db: AsyncSession, day_id: int) -> workouts.DayModel | No
     day = await db.get(workouts.DayModel, day_id)
     return day
 
-async def get_all_days(db: AsyncSession) -> workouts.DayModel:
+async def get_all_days(db: AsyncSession) -> list[workouts.DayModel]:
     query = select(workouts.DayModel)
     days = (await db.scalars(query)).all()
     return days

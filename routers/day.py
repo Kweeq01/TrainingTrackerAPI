@@ -10,7 +10,11 @@ router = APIRouter(
 
 @router.post("", response_model=workout.SDay)
 async def add_day(day: workout.SDayAdd, db: SessionDep):
-    return await create_day(db, day.plan_id, day.name_training_day, day.calendar_day)
+    new_day = await create_day(db, day.plan_id, day.name_training_day, day.calendar_day)
+
+    if new_day is None:
+        raise HTTPException(status_code=404, detail="Plan not found")
+    return new_day
 
 @router.get("/{day_id}", response_model=workout.SDay)
 async def get_day(db: SessionDep, day_id: int):

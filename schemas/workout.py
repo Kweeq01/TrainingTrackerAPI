@@ -51,6 +51,7 @@ class SSet(SSetAdd):
 
 
 class SSessionAdd(BaseModel):
+    day_id: int
     session_date: date
     notes: str | None = None
 
