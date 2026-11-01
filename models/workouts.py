@@ -16,7 +16,7 @@ class ExerciseModel(Base):
     exercise_name: Mapped[str] = mapped_column(VARCHAR(50))
     description: Mapped[str | None] = mapped_column(VARCHAR(100), nullable=True)
 
-    training_sets: Mapped[list["SetModel"]] = relationship(back_populates="exercise")
+    training_sets: Mapped[list["TrainingSetModel"]] = relationship(back_populates="exercise")
 
 class PlanModel(Base):
     __tablename__ = "plan"
@@ -36,13 +36,13 @@ class DayModel(Base):
     calendar_day: Mapped[CalendarDay] = mapped_column(Enum(CalendarDay))
 
     plan: Mapped["PlanModel"] = relationship(back_populates="days")
-    training_sets: Mapped[list["SetModel"]] = relationship(back_populates="day")
+    training_sets: Mapped[list["TrainingSetModel"]] = relationship(back_populates="day")
     sessions: Mapped[list["SessionModel"]] = relationship(back_populates="day")
 
-class SetModel(Base):
+class TrainingSetModel(Base):
     __tablename__ = "training_set"
 
-    set_id: Mapped[int] = mapped_column(primary_key=True)
+    training_set_id: Mapped[int] = mapped_column(primary_key=True)
     exercise_id: Mapped[int] = mapped_column(ForeignKey("exercise.exercise_id"))
     day_id: Mapped[int] = mapped_column(ForeignKey("day.day_id"))
     sets_count: Mapped[int]
@@ -69,11 +69,11 @@ class CompletedSetModel(Base):
 
     completed_set_id: Mapped[int] = mapped_column(primary_key=True)
     session_id: Mapped[int] = mapped_column(ForeignKey("session.session_id"))
-    set_id: Mapped[int] = mapped_column(ForeignKey("training_set.set_id"))
+    training_set_id: Mapped[int] = mapped_column(ForeignKey("training_set.training_set_id"))
     set_number: Mapped[int]
     completed_reps: Mapped[int]
     completed_weight: Mapped[Decimal] = mapped_column(Numeric(6, 3))
     notes: Mapped[str | None] = mapped_column(VARCHAR(150), nullable=True)
 
     session: Mapped["SessionModel"] = relationship(back_populates="completed_sets")
-    training_set: Mapped["SetModel"] = relationship(back_populates="completed_sets")
+    training_set: Mapped["TrainingSetModel"] = relationship(back_populates="completed_sets")

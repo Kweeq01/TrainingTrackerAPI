@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from enums import CalendarDay
 from decimal import Decimal
 from datetime import date
-
+   
 class SExerciseAdd(BaseModel):
     exercise_name: str
     description: str | None = None
@@ -37,13 +37,15 @@ class SDay(SDayAdd):
     model_config = ConfigDict(from_attributes=True)
 
 
-class SSetAdd(BaseModel):
+class STrainingSetAdd(BaseModel):
+    day_id: int
+    exercise_id: int
     sets_count: int
     reps_count: int
-    weight: Decimal
+    weight: Decimal = Field(max_digits=6, decimal_places=3, examples=["0.000"])
 
-class SSet(SSetAdd):
-    set_id: int
+class STrainingSet(STrainingSetAdd):
+    training_set_id: int
     exercise_id: int
     day_id: int
 
@@ -71,6 +73,6 @@ class SCompletedSetAdd(BaseModel):
 class SCompletedSet(SCompletedSetAdd):
     completed_set_id: int
     session_id: int
-    set_id: int
+    training_set_id: int
 
     model_config = ConfigDict(from_attributes=True)

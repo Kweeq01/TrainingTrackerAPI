@@ -29,7 +29,7 @@ async def get_sessions(db: SessionDep):
     return await get_all_sessions(db)
 
 @router.delete("/{session_id}")
-async def remove_sessions(db: SessionDep, session_id: int):
+async def remove_session(db: SessionDep, session_id: int):
     deleted = await delete_session(db, session_id)
 
     if not deleted:
