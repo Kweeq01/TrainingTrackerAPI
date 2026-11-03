@@ -70,7 +70,7 @@ class CompletedSetModel(Base):
     completed_set_id: Mapped[int] = mapped_column(primary_key=True)
     session_id: Mapped[int] = mapped_column(ForeignKey("session.session_id"))
     training_set_id: Mapped[int] = mapped_column(ForeignKey("training_set.training_set_id"))
-    set_number: Mapped[int]
+    completed_set_number: Mapped[int]
     completed_reps: Mapped[int]
     completed_weight: Mapped[Decimal] = mapped_column(Numeric(6, 3))
     notes: Mapped[str | None] = mapped_column(VARCHAR(150), nullable=True)

@@ -65,10 +65,13 @@ class SSession(SSessionAdd):
 
 
 class SCompletedSetAdd(BaseModel):
-    set_number: int
+    session_id: int
+    training_set_id: int
+    completed_set_number: int
     completed_reps: int
     completed_weight: Decimal
     notes: str | None = None
+
 
 class SCompletedSet(SCompletedSetAdd):
     completed_set_id: int
